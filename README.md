@@ -31,10 +31,18 @@ Running on public URL: https://43c218be4e979407bb.gradio.live
 ```
 
 ## 5. Docker
+- Run docker 
 ```
 docker run --name  translation-agent-nchc -d c00cjz00/translation-agent-nchc sleep infinity
 docker exec -it translation-agent-nchc bash
+```
+- Edit .env
+```
 cd /translation-agent-nchc
+vi .env
+```
+- Run command
+```
 poetry run python app/app.py &
 # open link like https://c350c516d7d4b1696c.gradio.live
 ```
