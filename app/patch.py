@@ -47,17 +47,17 @@ def model_load(
                 api_key=api_key if api_key else os.getenv("TOGETHER_API_KEY"),
                 base_url="https://api.together.xyz/v1",
             )
-        case "CUSTOM":
+        case "CUSTOM_taide":
             client = openai.OpenAI(
                 api_key=api_key if api_key else os.getenv("TAIDE_API_KEY"),
                 base_url="https://td.nchc.org.tw/api/v1",
             )
-        case "CUSTOM2":
+        case "CUSTOM_nvidia":
             client = openai.OpenAI(
                 api_key=api_key if api_key else os.getenv("NVIDIA_API_KEY"),
                 base_url="https://integrate.api.nvidia.com/v1",
             )            
-        case "CUSTOM.old":
+        case "CUSTOM":
             client = openai.OpenAI(api_key=api_key, base_url=base_url)
         case "Ollama":
             client = openai.OpenAI(

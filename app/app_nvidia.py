@@ -86,9 +86,9 @@ def update_model(endpoint):
         "OpenAI": "gpt-4o",
         "TogetherAI": "Qwen/Qwen2-72B-Instruct",
         "Ollama": "llama3",
-        "CUSTOM": "",
+        "CUSTOM_nvidia": "01-ai/yi-large",
     }
-    if endpoint == "CUSTOM":
+    if endpoint == "CUSTOM_nvidia":
         base = gr.update(visible=True)
     else:
         base = gr.update(visible=False)
@@ -163,7 +163,7 @@ def close_btn_hide(output_diff):
 
 TITLE = """
     <div style="display: inline-flex;">
-        <div style="margin-left: 6px; font-size:32px; color: #6366f1"><b>Translation Agent</b> WebUI</div>
+        <div style="margin-left: 6px; font-size:32px; color: #6366f1"><b>NCHC</b> 學術翻譯服務</div>
     </div>
 """
 
@@ -237,59 +237,65 @@ with gr.Blocks(theme="soft", css=CSS, fill_height=True) as demo:
         with gr.Column(scale=1) as menubar:
             endpoint = gr.Dropdown(
                 label="Endpoint",
-                choices=["OpenAI", "Groq", "TogetherAI", "Ollama", "CUSTOM"],
-                value="OpenAI",
+                choices=["OpenAI", "Groq", "TogetherAI", "Ollama", "CUSTOM_nvidia"],
+                value="CUSTOM_nvidia",
+                visible=False,                
             )
             choice = gr.Checkbox(
                 label="Additional Endpoint",
                 info="Additional endpoint for reflection",
+                visible=False,
             )
-            model = gr.Textbox(
-                label="Model",
-                value="gpt-4o",
+            model = gr.Dropdown(
+                label="執行翻譯模型 (1,3輪)",
+                choices=["01-ai/yi-large","nvidia/nemotron-4-340b-instruct", "meta/llama-3.1-70b-instruct"],
+                value="01-ai/yi-large",
             )
             api_key = gr.Textbox(
                 label="API_KEY",
                 type="password",
+                visible=False,                
             )
             base = gr.Textbox(label="BASE URL", visible=False)
-            with gr.Column(visible=False) as AddEndpoint:
-                endpoint2 = gr.Dropdown(
-                    label="Additional Endpoint",
-                    choices=[
-                        "OpenAI",
-                        "Groq",
-                        "TogetherAI",
-                        "Ollama",
-                        "CUSTOM",
-                    ],
-                    value="OpenAI",
-                )
-                model2 = gr.Textbox(
-                    label="Model",
-                    value="gpt-4o",
-                )
-                api_key2 = gr.Textbox(
-                    label="API_KEY",
-                    type="password",
-                )
-                base2 = gr.Textbox(label="BASE URL", visible=False)
+            endpoint2 = gr.Dropdown(
+                label="Additional Endpoint",
+                choices=[
+                    "OpenAI",
+                    "Groq",
+                    "TogetherAI",
+                    "Ollama",
+                    "CUSTOM_nvidia",
+                ],
+                value="CUSTOM_nvidia",
+                visible=False,                
+            )
+            model2 = gr.Dropdown(
+                label="評論翻譯模型 (第2輪)",
+                choices=["01-ai/yi-large","nvidia/nemotron-4-340b-instruct", "meta/llama-3.1-70b-instruct"],
+                value="meta/llama-3.1-70b-instruct",
+            )
+            api_key2 = gr.Textbox(
+                label="API_KEY",
+                type="password",
+                visible=False,                
+            )
+            base2 = gr.Textbox(label="BASE URL", visible=False)
             with gr.Row():
                 source_lang = gr.Textbox(
-                    label="Source Lang",
+                    label="輸入 Lang",
                     value="English",
                     elem_classes="lang",
                 )
                 target_lang = gr.Textbox(
-                    label="Target Lang",
-                    value="Spanish",
+                    label="翻譯 Lang",
+                    value="台灣用的中文",
                     elem_classes="lang",
                 )
             switch_btn = gr.Button(value="🔄️")
             country = gr.Textbox(
-                label="Country", value="Argentina", max_lines=1
+                label="國家區域", value="台灣", max_lines=1
             )
-            with gr.Accordion("Advanced Options", open=False):
+            with gr.Accordion("進階設定", open=False):
                 max_tokens = gr.Slider(
                     label="Max tokens Per Chunk",
                     minimum=512,
@@ -314,27 +320,27 @@ with gr.Blocks(theme="soft", css=CSS, fill_height=True) as demo:
 
         with gr.Column(scale=4):
             source_text = gr.Textbox(
-                label="Source Text",
-                value="If one advances confidently in the direction of his dreams, and endeavors to live the life which he has imagined, he will meet with a success unexpected in common hours.",
-                lines=12,
+                label="輸入文字",
+                value="One of the major barriers to using large language models (LLMs) in medicine is the perception they use uninterpretable methods to make clinical decisions that are inherently different from the cognitive processes of clinicians. In this manuscript we develop diagnostic reasoning prompts to study whether LLMs can imitate clinical reasoning while accurately forming a diagnosis. We find that GPT-4 can be prompted to mimic the common clinical reasoning processes of clinicians without sacrificing diagnostic accuracy. This is significant because an LLM that can imitate clinical reasoning to provide an interpretable rationale offers physicians a means to evaluate whether an LLMs response is likely correct and can be trusted for patient care. Prompting methods that use diagnostic reasoning have the potential to mitigate the “black box” limitations of LLMs, bringing them one step closer to safe and effective use in medicine.",
+                lines=8,
             )
-            with gr.Tab("Final"):
+            with gr.Tab("最終翻譯 (第3輪)"):
                 output_final = gr.Textbox(
-                    label="Final Translation", lines=12, show_copy_button=True
+                    label="最終翻譯", lines=8, show_copy_button=True
                 )
-            with gr.Tab("Initial"):
+            with gr.Tab("初始翻譯 (第1輪)"):
                 output_init = gr.Textbox(
-                    label="Init Translation", lines=12, show_copy_button=True
+                    label="初始翻譯", lines=8, show_copy_button=True
                 )
-            with gr.Tab("Reflection"):
+            with gr.Tab("評論翻譯 (第2輪)"):
                 output_reflect = gr.Textbox(
-                    label="Reflection", lines=12, show_copy_button=True
+                    label="評論翻譯", lines=8, show_copy_button=True
                 )
-            with gr.Tab("Diff"):
+            with gr.Tab("前後修正差異"):
                 output_diff = gr.HighlightedText(visible=False)
     with gr.Row():
-        submit = gr.Button(value="Translate")
-        upload = gr.UploadButton(label="Upload", file_types=["text"])
+        submit = gr.Button(value="翻譯")
+        upload = gr.UploadButton(label="上傳文件 (TXT, PDF, DOCX)", file_types=["text"])
         export = gr.DownloadButton(visible=False)
         clear = gr.ClearButton(
             [source_text, output_init, output_reflect, output_final]
@@ -352,7 +358,7 @@ with gr.Blocks(theme="soft", css=CSS, fill_height=True) as demo:
     )
     endpoint.change(fn=update_model, inputs=[endpoint], outputs=[model, base])
 
-    choice.select(fn=enable_sec, inputs=[choice], outputs=[AddEndpoint])
+    #choice.select(fn=enable_sec, inputs=[choice], outputs=[AddEndpoint])
     endpoint2.change(
         fn=update_model, inputs=[endpoint2], outputs=[model2, base2]
     )
