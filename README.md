@@ -12,8 +12,9 @@ poetry shell # activates virtual environment
 ## 2. Set API Keys:
 Edit .env, you can add your API keys for each service:
 ```
-OPENAI_API_KEY="sk-xxxxx"    # replace "sk-xxxxx" with your secret OpenAI API key
+# 使用底下 app_taide.py 有關, 才需要設定
 TAIDE_API_KEY="ey-"
+# 使用底下 app_nvidia.py 有關, 才需要設定
 NVIDIA_API_KEY="nvapi-"
 ```
 
@@ -43,6 +44,14 @@ docker exec -it translation-agent-nchc bash
 cd /translation-agent-nchc
 vi .env
 ```
+content
+```
+# 使用底下 app_taide.py 有關, 才需要設定
+TAIDE_API_KEY="ey-"
+# 使用底下 app_nvidia.py 有關, 才需要設定
+NVIDIA_API_KEY="nvapi-"
+```
+
 - Run command
 ```
 # poetry run python app/(app.py|app_nvidia.py|app_taide.py)
