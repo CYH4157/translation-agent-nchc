@@ -22,8 +22,9 @@ NVIDIA_API_KEY="nvapi-"
 ```
 # ORI or NVIDIA OR TAIDE 
 #poetry run python app/(app.py|app_nvidia.py|app_taide.py)
-poetry run python app/app_nvidia.py
-
+#poetry run python app/app_nvidia.py
+poetry sehll
+python app/app_nvidia.py
 ```
 
 ## 4. Click gradio public url
@@ -56,6 +57,9 @@ NVIDIA_API_KEY="nvapi-"
 ```
 # poetry run python app/(app.py|app_nvidia.py|app_taide.py)
 poetry run python app/app_nvidia.py &
+```
+- Open URL
+```
 # open link like https://c350c516d7d4b1696c.gradio.live
 ```
 
