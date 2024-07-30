@@ -19,7 +19,8 @@ NVIDIA_API_KEY="nvapi-"
 
 ## 3. Run the Web UI:
 ```
-python app/app.py
+poetry run python app/app.py
+#python app/app.py
 ```
 
 ## 4. Click gradio public url
