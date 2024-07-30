@@ -1,18 +1,15 @@
 # CJZ
 ## 1. Install Dependencies:
 ```
-conda create -n translation-agent python=3.10 -y
-conda activate translation-agent
+conda create -n translation-agent-nchc python=3.10 -y
+conda activate translation-agent-nchc
 pip install poetry ffmpy
-mkdir -p /work/$(whoami)/mygithub/
-cd /work/$(whoami)/mygithub/
-git clone https://github.com/andrewyng/translation-agent.git
-cd translation-agent
+git clone https://github.com/c00cjz00/translation-agent-nchc.git
+cd translation-agent-nchc
 poetry install --with app
-poetry shell
 ```
 ## 2. Set API Keys:
-Edit .env\, you can add your API keys for each service:
+Edit .env, you can add your API keys for each service:
 ```
 OPENAI_API_KEY="sk-xxxxx"    # replace "sk-xxxxx" with your secret OpenAI API key
 TAIDE_API_KEY="ey-"
@@ -24,6 +21,12 @@ NVIDIA_API_KEY="nvapi-"
 python app/app.py
 ```
 
+## 4. Click gradio public url
+點下翻譯按鈕, 進行三道流程翻譯
+```
+# example
+Running on public URL: https://43c218be4e979407bb.gradio.live
+```
 # Translation Agent: Agentic translation using reflection workflow
 
 This is a Python demonstration of a reflection agentic workflow for machine translation. The main steps are:
