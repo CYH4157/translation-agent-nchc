@@ -1,12 +1,13 @@
 # CJZ
 ## 1. Install Dependencies:
 ```
-conda create -n translation-agent-nchc python=3.10 -y
-conda activate translation-agent-nchc
+#conda create -n translation-agent-nchc python=3.10 -y
+#conda activate translation-agent-nchc
 pip install poetry ffmpy
 git clone https://github.com/c00cjz00/translation-agent-nchc.git
 cd translation-agent-nchc
 poetry install --with app
+poetry shell # activates virtual environment
 ```
 ## 2. Set API Keys:
 Edit .env, you can add your API keys for each service:
