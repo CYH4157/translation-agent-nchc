@@ -29,6 +29,16 @@ poetry run python app/app.py
 # example
 Running on public URL: https://43c218be4e979407bb.gradio.live
 ```
+
+## 5. Docker
+```
+docker run --name  translation-agent-nchc -d c00cjz00/translation-agent-nchc sleep infinity
+docker exec -it translation-agent-nchc bash
+cd /translation-agent-nchc
+poetry run python app/app.py &
+# open link like https://c350c516d7d4b1696c.gradio.live
+```
+
 # Translation Agent: Agentic translation using reflection workflow
 
 This is a Python demonstration of a reflection agentic workflow for machine translation. The main steps are:
