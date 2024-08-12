@@ -1,10 +1,15 @@
 ## docker 
 
+### build
 ```
-docker build --build-arg TAIDE_API_KEY="your_taide_api_key_here" --build-arg NVIDIA_API_KEY="your_nvidia_api_key_here" -t translation-agent-cyh:v3 .
-docker run -d translation-agent-cyh:v3 sleep infinity
+docker build -t translation-agent-cyh:v5 .
 
 ```
+
+```
+docker run -e TAIDE_API_KEY="ey-xxxxx" -it translation-agent-cyh:v5 poetry run python app/app_taide.py
+```
+
 
 
 
