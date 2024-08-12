@@ -395,4 +395,4 @@ with gr.Blocks(theme="soft", css=CSS, fill_height=True) as demo:
     close.click(fn=None, cancels=start_ta)
 
 if __name__ == "__main__":
-    demo.queue(api_open=False).launch(show_api=False, share=True)
+    demo.queue(api_open=False).launch(show_api=False, share=True, server_name="0.0.0.0", server_port=7860)
