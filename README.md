@@ -1,3 +1,14 @@
+## docker 
+
+```
+docker build --build-arg TAIDE_API_KEY="your_taide_api_key_here" --build-arg NVIDIA_API_KEY="your_nvidia_api_key_here" -t translation-agent-cyh:v3 .
+docker run -d translation-agent-cyh:v3 sleep infinity
+
+```
+
+
+
+
 # CJZ
 ## 1. Install Dependencies:
 ```
