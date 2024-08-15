@@ -7,7 +7,7 @@ docker build -t translation-agent-cyh .
 ```
 
 ```
-docker run -e TAIDE_API_KEY="ey-xxxxx" -it translation-agent-cyh:v5 poetry run python app/app_taide.py
+docker run -e TAIDE_API_KEY="ey-xxxxx" -it translation-agent-cyh poetry run python app/app_taide.py
 ```
 
 
