@@ -1,40 +1,31 @@
 FROM python:3.10-slim
 
-# 工作目錄設定
-WORKDIR /app
-
-# 安装系统
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
-    vim \
     && rm -rf /var/lib/apt/lists/*
 
-# 安装 pip 
+# Set the working directory inside the container
+WORKDIR /translation-agent-nchc
+
+# Copy the entire project directory to the container's working directory
+COPY . .
+
+# Upgrade pip to the latest version
 RUN pip install --upgrade pip
 
-# 安装 Poetry 和 ffmpy
+# Install Poetry and ffmpy using pip
 RUN pip install poetry ffmpy
 
-# clone项目仓库
-RUN git clone https://github.com/c00cjz00/translation-agent-nchc.git /translation-agent-nchc
-
-# 切换工作目录到根目錄和删除/app目录
-WORKDIR /
-
-# 定義建时傳入的參數
-ARG TAIDE_API_KEY
-ARG NVIDIA_API_KEY
-
-# 修改 .env 文件以包含傳入的 API keys
-RUN sed -i "s|TAIDE_API_KEY=\"ey-\"|TAIDE_API_KEY=\"$TAIDE_API_KEY\"|" /translation-agent-nchc/.env && \
-    sed -i "s|NVIDIA_API_KEY=\"nvapi-\"|NVIDIA_API_KEY=\"$NVIDIA_API_KEY\"|" /translation-agent-nchc/.env
-
-# 切换到项目目錄安装项目依赖
-WORKDIR /translation-agent-nchc
+# Install Python dependencies specified in the pyproject.toml file using Poetry
 RUN poetry install --with app
 
-# 設置容器啟動时的默認命令
-CMD ["poetry", "run"]
+# Add the startup script to the container
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
-# Expose the port (if needed, depending on your app)
+# Set the default command to run the startup script when the container starts
+CMD ["/start.sh"]
+
+# Expose the port for the application (if needed)
 EXPOSE 7860
