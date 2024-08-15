@@ -2,7 +2,7 @@
 
 ### build
 ```
-docker build -t translation-agent-cyh:v5 .
+docker build -t translation-agent-cyh .
 
 ```
 
